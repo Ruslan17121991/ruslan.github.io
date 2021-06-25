@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <form  @submit.prevent="onSubmit" action="./new client/client.html" class="person">
+
+            <p>Фамилия:*</p>
+            <input v-model.trim="$v.surename.$model" @blur="$v.surename.$touch()" :class="status($v.surename)">
+            <span v-if="$v.surename.$error">
+                <template v-if="!$v.surename.maxLength">
+                    Длина фамилии не должна превышать {{ $v.surename.$params.maxLength.max }} символов
+                </template>
+                <template v-else-if="!$v.surename.alpha">
+                    Фамилия должно содержать только буквы
+                </template>
+                <template v-else>
+                    Фамилия обязательно для заполнения
+                </template>
+            </span>
+
+            <p>Имя:*</p>
+            <input v-model.trim="$v.name.$model" @blur="$v.name.$touch()" :class="status($v.name)">
+            <span v-if="$v.name.$error">
+                <template v-if="!$v.name.maxLength">
+                    Длина имени не должна превышать {{ $v.name.$params.maxLength.max }} символов
+                </template>
+                <template v-else-if="!$v.name.alpha">
+                    Имя должно содержать только буквы
+                </template>
+                <template v-else>
+                    Имя обязательно для заполнения
+                </template>
+            </span>
+
+            <p>Отчество:</p>
+            <input type="text">
+
+            <p>Дата рождения:*</p>
+            <input type="date" v-model="$v.data.$model" @blur="$v.data.$touch()" :class="status($v.data)">
+            <span v-if="$v.data.$error">
+                <template v-if="!$v.data.required">
+                    Дата не должна быть пустой
+                </template>
+            </span>
+
+            <p>Номер телефона:*</p>
+            <input type="tel" v-model="$v.tel.$model" @blur="$v.tel.$touch()" :class="status($v.tel)" placeholder="7">
+            <span v-if="$v.tel.$error">
+                <template v-if="!$v.tel.maxLength">
+                    Длина номера телефона не должна превышать {{ $v.tel.$params.maxLength.max }} символов
+                </template>
+                <template v-else-if="!$v.tel.numeric">
+                    Номер телефона должен содержать только цифры
+                </template>
+                <template v-else-if="!$v.tel.required">
+                    Номер телефона обязателен для заполнения
+                </template>
+                <template v-else-if="!$v.tel.num">
+                    Номер телефона должен начинаться с цифры 7
+                </template>
+                <template v-else-if="!$v.tel.minLength">
+                    Длина номера дожна быть {{ $v.tel.$params.minLength.min }} символов
+                </template>
+            </span>
+
+            <p>Пол:</p>
+            <span>Муж.</span><input type="radio" name="radio">
+            <span>Жен.</span><input type="radio" name="radio">
+
+            <p>Группа клиентов:*
+            <p>
+                <select multiple v-model="$v.select.$model" @blur="$v.select.$touch()" :class="status($v.select)">
+                    <option v-for="option in options">{{ option }}</option>
+                </select>
+                <span v-if="$v.select.$error">
+                    <template v-if="!$v.select.required">
+                        Выбор значения обязателен
+                    </template>
+                </span>
+
+            <p>Лечащий врач:</p>
+            <select v-model="name_doctor">
+                <option v-for="option in options2">{{ option }}</option>
+            </select>
+            </p>
+            <p>Не отправлять СМС:</p>
+            <input type="checkbox" v-model="checked">
+
+            <p>Адрес:</p>
+            <input class="input" type="text" placeholder="Индекс">
+            <input class="input" type="text" placeholder="Страна">
+            <input class="input" type="text" placeholder="Область">
+            <input type="text" v-model="$v.city.$model" @blur="$v.city.$touch()" :class="status($v.city)"
+                placeholder="Город*">
+            <span v-if="$v.city.$error">
+                <template v-if="!$v.city.required">
+                    Поле город не должно быть пустым
+                </template>
+                <template v-else-if="!$v.city.cityNum">
+                    Поле город не должно содержать цифр и спецсимволов
+                </template>
+            </span>
+            <input class="input" type="text" placeholder="Улица">
+            <input class="input" type="text" placeholder="Дом">
+
+            <p>Паспорт:</p>
+            <p class="p">Тип документа:*</p>
+            <select placeholder="Тип документа" v-model="$v.selected.$model" @blur="$v.selected.$touch()"
+                :class="status($v.selected)">
+                <option v-for="option in options3">{{ option }}</option>
+            </select>
+            <span v-if="$v.selected.$error">
+                <template v-if="!$v.selected.required">
+                    Выбор типа документа обязателен
+                </template>
+            </span>
+
+            <input class="input" type="text" placeholder="Серия">
+            <input type="text" v-model="$v.passportNum.$model" placeholder="Номер">
+            <span v-if="!$v.passportNum.numeric">
+                Номер паспорта должен содержать только цифры
+            </span>
+            <input class="input" type="text" placeholder="Кем выдан">
+            <p>Дата выдачи*</p>
+            <input type="date" v-model="$v.dataPassport.$model" @blur="$v.dataPassport.$touch()"
+                :class="status($v.dataPassport)">
+            <span v-if="$v.dataPassport.$error">
+                <template v-if="!$v.dataPassport.required">
+                    Дата не должна быть пустой
+                </template>
+            </span>
+            <div><button type="submit" class="btn">Отправить</button></div>
+            <p>*Поле обязательное для заполнения.</p>
+
+            
+          
+
+
+        </form>
+
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.6/dist/vuelidate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.6/dist/validators.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>

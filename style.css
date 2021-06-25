@@ -1,0 +1,68 @@
+
+
+.person{
+  width: 400px;
+  padding: 5px;
+  background: slateblue;
+  border: 1px solid orange;
+}
+
+p{
+    margin-bottom: 2px ;
+    font-family: 'Montserrat', sans-serif;
+
+}
+.p{
+  margin-top: 0px;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+.btn{
+    margin-top: 10px;
+    background: #179c0b;
+    color: white;
+    width: 130px;
+    height: 30px;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn:hover{
+    background: darkblue;
+}
+
+input, select {
+    outline: none;
+    border: 1px solid silver;
+    border-radius: 4px;
+    background: white;
+    padding: 5px 10px;
+    margin-bottom: 2px;
+  }
+
+ 
+  
+  
+  
+  .dirty {
+    border-color: #5A5;
+    background: #EFE;
+  }
+  
+  .dirty:focus {
+    outline-color: #8E8;
+  }
+  
+  .error {
+    border-color: red;
+    background: #FDD;
+  }
+  
+  .error:focus {
+    outline-color: #F99;
+  }
+
+  .input{
+      display: block;
+  }
